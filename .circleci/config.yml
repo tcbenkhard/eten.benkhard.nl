@@ -39,6 +39,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - npm i -g aws-cdk
       - deploy
 
 workflows:
