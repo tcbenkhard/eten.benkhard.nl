@@ -36,7 +36,7 @@ jobs:
       - test
 
   deploy:
-    executor: aws-cli
+    executor: aws-cli/default
     steps:
       - attach_workspace:
           at: .
