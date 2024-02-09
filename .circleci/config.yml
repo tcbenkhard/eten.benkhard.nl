@@ -27,7 +27,7 @@ jobs:
             - .
   test:
     machine:
-      image: ubuntu-2204:2022.10.1
+      image: cimg/node:21.6.1
     steps:
       - attach_workspace:
           at: .
@@ -35,7 +35,7 @@ jobs:
 
   deploy:
     machine:
-      image: ubuntu-2204:2022.10.1
+      image: cimg/node:21.6.1
     steps:
       - attach_workspace:
           at: .
@@ -50,4 +50,4 @@ workflows:
             - build
       - deploy:
           requires:
-            - build
+            - test
