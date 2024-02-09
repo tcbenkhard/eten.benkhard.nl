@@ -15,7 +15,7 @@ commands:
   deploy:
     steps:
       - run: npm i aws-cdk
-      - run: cdk deploy --require-approval never
+      - run: npm run deploy
 
 jobs:
   build:
