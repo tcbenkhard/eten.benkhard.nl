@@ -18,7 +18,8 @@ commands:
 
 jobs:
   build:
-    executor: aws-cli/default
+    docker:
+      - image: cimg/node:21.6.1
     steps:
       - build
       - persist_to_workspace:
@@ -26,16 +27,15 @@ jobs:
           paths:
             - .
   test:
-    machine:
-      image: cimg/node:21.6.1
+    docker:
+      - image: cimg/node:21.6.1
     steps:
       - attach_workspace:
           at: .
       - test
 
   deploy:
-    machine:
-      image: cimg/node:21.6.1
+    executor: aws-cli/default
     steps:
       - attach_workspace:
           at: .
