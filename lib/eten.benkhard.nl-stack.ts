@@ -28,7 +28,8 @@ export class EtenBenkhardNlStack extends cdk.Stack {
       handler: 'handler',
       entry: 'src/get-meals-handler.ts',
       functionName: `${this.serviceName}-get-meals`,
-      environment
+      environment,
+      memorySize: 512
     })
     mealsTable.grantReadData(getMealsHandler)
 
