@@ -36,7 +36,8 @@ jobs:
       - test
 
   deploy:
-    executor: aws-cli/default
+    docker:
+      - image: tcbenkhard/node20-cdk:latest
     steps:
       - attach_workspace:
           at: .
