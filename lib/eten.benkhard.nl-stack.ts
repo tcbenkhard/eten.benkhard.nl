@@ -33,6 +33,14 @@ export class EtenBenkhardNlStack extends cdk.Stack {
     })
     mealsTable.grantReadData(getMealsHandler)
 
+    const loginHandler = new NodejsFunction(this, 'LoginHandler', {
+      handler: 'handler',
+      entry: 'src/login-handler.ts',
+      functionName: `${this.serviceName}-login`,
+      environment,
+      memorySize: 512
+    })
+
     const gateway = new api.RestApi(this, `MealsApi`, {
       restApiName: this.serviceName,
       defaultCorsPreflightOptions: {
@@ -42,5 +50,8 @@ export class EtenBenkhardNlStack extends cdk.Stack {
 
     const gatewayMeals = gateway.root.addResource('meals');
     gatewayMeals.addMethod('GET', new LambdaIntegration(getMealsHandler));
+
+    const gatewayLogin = gateway.root.addResource('login')
+    gatewayLogin.addMethod('POST', new LambdaIntegration(loginHandler))
   }
 }
