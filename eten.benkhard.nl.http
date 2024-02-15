@@ -1,2 +1,10 @@
 ### Get all available meals
 GET https://{{hostname}}/meals
+
+### Login to picnic api
+POST https://{{hostname}}/login
+
+{
+    "username": "manon_besemer@hotmail.com"
+    "password": "{{password}}"
+}
