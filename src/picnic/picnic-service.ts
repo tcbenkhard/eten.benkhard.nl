@@ -23,11 +23,11 @@ export class PicnicService {
     }
 
     public proxy = async (method: string, path: string, headers: {[key: string]: string | number | boolean}, body: string | null): Promise<APIGatewayProxyResult> => {
-        const allowed_headers = ['x-picnic-auth']
+        const allowed_headers = ['x-picnic-auth', 'content-type']
         const filtered_headers: {[key: string]: string | number | boolean} = {}
-        for(const header in allowed_headers) {
-            if(Object.keys(headers).includes(header)) {
-                filtered_headers[header] = headers[header]
+        for(const headerKey in Object.keys(headers)){
+            if(allowed_headers.includes(headerKey.toLowerCase())) {
+                filtered_headers[headerKey] = headers[headerKey]
             }
         }
 
