@@ -8,3 +8,13 @@ POST https://{{hostname}}/login
     "username": "manon_besemer@hotmail.com"
     "password": "{{password}}"
 }
+
+### Login picnic
+POST https://{{hostname}}/picnic/15/user/login
+Content-Type: application/json
+
+{
+  "key": "manon_besemer@hotmail.com",
+  "secret": "ddff466d932971e2e44c4a3063287be7",
+  "client_id": 30100
+}

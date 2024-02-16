@@ -9,7 +9,16 @@ export class PicnicService {
 
     constructor() {
         this.client = new Axios({
-            baseURL: this.PICNIC_BASE_URL
+            baseURL: this.PICNIC_BASE_URL,
+        })
+        this.client.interceptors.request.use(request => {
+            console.log('Starting Request', JSON.stringify(request, null, 2))
+            return request
+        })
+
+        this.client.interceptors.response.use(response => {
+            console.log('Response:', JSON.stringify(response, null, 2))
+            return response
         })
     }
 
