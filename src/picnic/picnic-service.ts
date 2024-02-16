@@ -23,11 +23,20 @@ export class PicnicService {
     }
 
     public proxy = async (method: string, path: string, headers: {[key: string]: string | number | boolean}, body: string | null): Promise<APIGatewayProxyResult> => {
+        const allowed_headers = ['x-picnic-auth']
+        const filtered_headers = Object.keys(headers)
+            .filter(key => allowed_headers.includes(key.toLowerCase()))
+            .reduce((obj, key) => {
+                // @ts-ignore
+                obj[key] = headers[key];
+                return obj;
+        }, {});
+
         const response =  await this.client.request({
             method,
-            url: path,
+            url: path.substring(7),
             data: body,
-            headers: headers
+            headers: filtered_headers
         })
         console.info(`Received response: `, response)
         return {
