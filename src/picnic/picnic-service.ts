@@ -1,7 +1,7 @@
 import axios, {Axios, AxiosResponse} from "axios";
 import md5Hex from 'md5-hex';
 import {ApiError} from "../util/exception";
-import {APIGatewayProxyResult} from "aws-lambda";
+import {APIGatewayProxyEvent, APIGatewayProxyResult} from "aws-lambda";
 
 export class PicnicService {
     private PICNIC_BASE_URL = "https://storefront-prod.nl.picnicinternational.com/api"
@@ -22,19 +22,20 @@ export class PicnicService {
         })
     }
 
-    public proxy = async (method: string, path: string, headers: {[key: string]: string | number | boolean}, body: string | null): Promise<APIGatewayProxyResult> => {
+    public proxy = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
         const allowed_headers = ['x-picnic-auth', 'content-type']
-        const filtered_headers: {[key: string]: string | number | boolean} = {}
-        for(const headerKey of Object.keys(headers)){
+        const filtered_headers: {[key: string]: string | number | boolean | undefined} = {}
+        for(const headerKey of Object.keys(event.headers)){
             if(allowed_headers.includes(headerKey.toLowerCase())) {
-                filtered_headers[headerKey] = headers[headerKey]
+                filtered_headers[headerKey] = event.headers[headerKey]
             }
         }
         const response =  await this.client.request({
-            method,
-            url: path.substring(7),
-            data: body,
-            headers: filtered_headers
+            method: event.httpMethod,
+            url: event.path.substring(7),
+            data: event.body,
+            headers: filtered_headers,
+            params: event.queryStringParameters
         })
         console.info(`Received response: `, response)
         return {
