@@ -17,7 +17,7 @@ export class PicnicService {
         })
 
         this.client.interceptors.response.use(response => {
-            console.log('Response:', JSON.stringify(response, null, 2))
+            console.log('Response:', JSON.stringify(response.data, null, 2))
             return response
         })
     }
@@ -41,7 +41,7 @@ export class PicnicService {
         return {
             statusCode: response.status,
             body: response.data,
-            headers: response.headers as {[key: string]: string | number | boolean}
+            headers: response.headers
         }
     }
 
