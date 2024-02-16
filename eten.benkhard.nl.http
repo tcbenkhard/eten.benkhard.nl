@@ -10,3 +10,19 @@ Content-Type: application/json
   "secret": "{{password}}",
   "client_id": 30100
 }
+
+> {%
+    client.global.set("x-picnic-auth", response.headers.valueOf('x-picnic-auth'));
+%}
+
+### Search
+GET https://{{hostname}}/picnic/15/search?search_term=kipfilet
+Content-Type: application/json
+User-Agent: okhttp/3.12.2
+x-picnic-auth: {{x-picnic-auth}}
+
+{
+  "key": "manon_besemer@hotmail.com",
+  "secret": "{{password}}",
+  "client_id": 30100
+}

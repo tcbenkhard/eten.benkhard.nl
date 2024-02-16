@@ -1,9 +1,9 @@
 import * as cdk from 'aws-cdk-lib';
+import {aws_apigateway as api, aws_dynamodb} from 'aws-cdk-lib';
 import {Construct} from 'constructs';
 import {NodejsFunction} from "aws-cdk-lib/aws-lambda-nodejs";
-import {aws_dynamodb, aws_apigateway as api} from "aws-cdk-lib";
 import {AttributeType} from "aws-cdk-lib/aws-dynamodb";
-import {LambdaIntegration} from "aws-cdk-lib/aws-apigateway";
+import {EndpointType, LambdaIntegration} from "aws-cdk-lib/aws-apigateway";
 
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
@@ -53,7 +53,10 @@ export class EtenBenkhardNlStack extends cdk.Stack {
       restApiName: this.serviceName,
       defaultCorsPreflightOptions: {
         allowOrigins: ['*']
-      }
+      },
+      endpointTypes: [
+          EndpointType.REGIONAL
+      ]
     });
 
     const gatewayMeals = gateway.root.addResource('meals');
