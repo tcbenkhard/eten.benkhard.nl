@@ -1,20 +1,12 @@
 ### Get all available meals
 GET https://{{hostname}}/meals
 
-### Login to picnic api
-POST https://{{hostname}}/login
-
-{
-    "username": "manon_besemer@hotmail.com"
-    "password": "{{password}}"
-}
-
 ### Login picnic
 POST https://{{hostname}}/picnic/15/user/login
 Content-Type: application/json
 
 {
   "key": "manon_besemer@hotmail.com",
-  "secret": "7507878f082f5b42840f23b839e709d6",
+  "secret": "{{password}}",
   "client_id": 30100
 }
