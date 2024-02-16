@@ -1,9 +1,32 @@
-import axios, {AxiosResponse} from "axios";
+import axios, {Axios, AxiosResponse} from "axios";
 import md5Hex from 'md5-hex';
 import {ApiError} from "../util/exception";
+import {APIGatewayProxyResult} from "aws-lambda";
 
 export class PicnicService {
-    private PICNIC_BASE_URL = "https://storefront-prod.nl.picnicinternational.com/api/15"
+    private PICNIC_BASE_URL = "https://storefront-prod.nl.picnicinternational.com/api/"
+    private client: Axios;
+
+    constructor() {
+        this.client = new Axios({
+            baseURL: this.PICNIC_BASE_URL
+        })
+    }
+
+    public proxy = async (method: string, path: string, headers: {[key: string]: string | number | boolean}, body: string | null): Promise<APIGatewayProxyResult> => {
+        const response =  await this.client.request({
+            method,
+            url: path,
+            data: body,
+            headers: headers
+        })
+        console.info(`Received response: `, response)
+        return {
+            statusCode: response.status,
+            body: response.data,
+            headers: response.headers as {[key: string]: string | number | boolean}
+        }
+    }
 
     private checkForErrors = (response: AxiosResponse) => {
         if (response.status >= 400) {

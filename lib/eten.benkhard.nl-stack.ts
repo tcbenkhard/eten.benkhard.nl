@@ -41,6 +41,14 @@ export class EtenBenkhardNlStack extends cdk.Stack {
       memorySize: 512
     })
 
+    const proxyHandler = new NodejsFunction(this, 'ProxyHandler', {
+      handler: 'handler',
+      entry: 'src/picnic-proxy-handler.ts',
+      functionName: `${this.serviceName}-picnic-proxy`,
+      environment,
+      memorySize: 512
+    })
+
     const gateway = new api.RestApi(this, `MealsApi`, {
       restApiName: this.serviceName,
       defaultCorsPreflightOptions: {
@@ -51,7 +59,10 @@ export class EtenBenkhardNlStack extends cdk.Stack {
     const gatewayMeals = gateway.root.addResource('meals');
     gatewayMeals.addMethod('GET', new LambdaIntegration(getMealsHandler));
 
-    const gatewayLogin = gateway.root.addResource('login')
-    gatewayLogin.addMethod('POST', new LambdaIntegration(loginHandler))
+    const gatewayLogin = gateway.root.addResource('picnic')
+    gatewayLogin.addProxy({
+      anyMethod: true,
+      defaultIntegration: new LambdaIntegration(proxyHandler)
+    })
   }
 }
