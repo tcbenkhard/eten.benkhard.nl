@@ -9,6 +9,5 @@ interface LoginRequest {
 
 const service = new PicnicService()
 export const handler = async (event: APIGatewayProxyEvent, context: Context) => {
-    console.info(`Received request`, event)
-    return service.proxy(event.httpMethod, event.path, event.headers as {[key: string]: string | number | boolean}, event.body)
+    return service.proxy(event)
 }

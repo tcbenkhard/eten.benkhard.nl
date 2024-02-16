@@ -16,7 +16,7 @@ Content-Type: application/json
 %}
 
 ### Search
-GET https://{{hostname}}/picnic/15/search?search_term=kipfilet
+GET https://{{hostname}}/picnic/15/search?search_term=tomatenpuree
 Content-Type: application/json
 User-Agent: okhttp/3.12.2
 x-picnic-auth: {{x-picnic-auth}}

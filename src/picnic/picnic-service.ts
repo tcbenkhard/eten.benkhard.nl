@@ -22,12 +22,15 @@ export class PicnicService {
         })
     }
 
-    public proxy = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+    proxy = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+        console.info(`Received request: `, event)
+        const headers = {...event.headers}
+        const headerKeys = Object.keys(headers)
         const allowed_headers = ['x-picnic-auth', 'content-type']
         const filtered_headers: {[key: string]: string | number | boolean | undefined} = {}
-        for(const headerKey of Object.keys(event.headers)){
+        for(const headerKey of headerKeys){
             if(allowed_headers.includes(headerKey.toLowerCase())) {
-                filtered_headers[headerKey] = event.headers[headerKey]
+                filtered_headers[headerKey] = headers[headerKey]
             }
         }
         const response =  await this.client.request({
@@ -42,7 +45,10 @@ export class PicnicService {
             statusCode: response.status,
             body: response.data,
             //@ts-ignore
-            headers: response.headers
+            headers: {
+                ...response.headers,
+                'Access-Control-Allow-Origin': '*'
+            }
         }
     }
 
