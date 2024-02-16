@@ -35,7 +35,7 @@ export class PicnicService {
             url: event.path.substring(7),
             data: event.body,
             headers: filtered_headers,
-            params: event.queryStringParameters
+            params: {...event.queryStringParameters}
         })
         console.info(`Received response: `, response)
         return {
