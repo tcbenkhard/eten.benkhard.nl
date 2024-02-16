@@ -26,7 +26,7 @@ export class PicnicService {
         const allowed_headers = ['x-picnic-auth', 'content-type']
         const filtered_headers: {[key: string]: string | number | boolean} = {}
         console.info(`Checking headers [${Object.keys(headers).join(', ')}]`)
-        for(const headerKey in Object.keys(headers)){
+        for(const headerKey of Object.keys(headers)){
             if(allowed_headers.includes(headerKey.toLowerCase())) {
                 filtered_headers[headerKey] = headers[headerKey]
             }
