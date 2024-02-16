@@ -4,7 +4,7 @@ import {ApiError} from "../util/exception";
 import {APIGatewayProxyResult} from "aws-lambda";
 
 export class PicnicService {
-    private PICNIC_BASE_URL = "https://storefront-prod.nl.picnicinternational.com/api/"
+    private PICNIC_BASE_URL = "https://storefront-prod.nl.picnicinternational.com/api"
     private client: Axios;
 
     constructor() {
