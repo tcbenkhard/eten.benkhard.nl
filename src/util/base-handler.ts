@@ -23,7 +23,7 @@ export const wrap_handler = (lambdaFunction: (event: APIGatewayProxyEvent, conte
                 }
             }
         }
-
+        console.error(e)
         return {
             statusCode: 500,
             body: JSON.stringify({
