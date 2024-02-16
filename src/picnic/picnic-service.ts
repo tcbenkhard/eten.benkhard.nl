@@ -31,7 +31,7 @@ export class PicnicService {
                 filtered_headers[headerKey] = headers[headerKey]
             }
         }
-
+        console.info(`Filtered headers: ${Object.keys(filtered_headers).join(', ')}`)
         const response =  await this.client.request({
             method,
             url: path.substring(7),
